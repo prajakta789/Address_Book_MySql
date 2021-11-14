@@ -1,0 +1,293 @@
+-- AddressBook Service
+
+-- UC1 Creating database as AddessBookService
+
+
+mysql> create database AddressBookService;
+Query OK, 1 row affected (0.13 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| addressbookservice |
+| information_schema |
+| mysql              |
+| payroll_services   |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use AddressBookService;
+Database changed
+
+
+-- UC2  creating table as AddressBook with attributes
+
+
+mysql> create table AddressBook (
+    -> firstName varchar(50) not null,
+    -> lastName varchar(50) not null,
+    -> address varchar(100) not null,
+    -> city varchar(50) not null,
+    -> state varchar(50) not null,
+    -> zip int not null,
+    -> phoneNumber double not null,
+    -> email varchar(100) not null );
+Query OK, 0 rows affected (1.14 sec)
+
+mysql> desc AddressBook;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| firstName   | varchar(50)  | NO   |     | NULL    |       |
+| lastName    | varchar(50)  | NO   |     | NULL    |       |
+| address     | varchar(100) | NO   |     | NULL    |       |
+| city        | varchar(50)  | NO   |     | NULL    |       |
+| state       | varchar(50)  | NO   |     | NULL    |       |
+| zip         | int          | NO   |     | NULL    |       |
+| phoneNumber | double       | NO   |     | NULL    |       |
+| email       | varchar(100) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.13 sec)
+
+
+-- UC3 inserting new Contacts to AddressBook table
+
+
+mysql> insert into AddressBook (firstname, lastname, address,city, state, zip,phoneNumber,email) values
+    ->  ('Prashanth N', 'Palegar','Yelahanka','Bengaluru','Karnataka',560064,8310133663,'imprash4u@gmail.com'),
+    ->  ('Praveen N ','Palegar','Ramapura','Bengaluru','Karnataka',561210,999999999,'praven@gmail.com'),
+    ->  ('Bharath S R','Jalgar','Santhebidnur','Hindupur','Andra Pradesh',520102,888888888,'bharath@gmail.com'),
+    -> ^C
+mysql> insert into AddressBook (firstname, lastname, address,city, state, zip,phoneNumber,email) values
+    ->  ('prajakta', 'Mahajan','cidco','Nashik','Maharashtrs', 220064, 7310133663,'prajakta56@gmail.com'),
+    ->  ('ruchita ','rathi','Ramapura','Ethawa','Bihar', 561210, 999999999,'ruchita@gmail.com'),
+    ->  ('komal','shelar','ringroad','Surat','Gujrat', 520102, 888888888,'komal@gmail.com'),
+    ->  ('mohini','patil','sirinagara','chennai','Tamilnadu', 3021402, 777777777,'mohini@gmail.com');
+Query OK, 4 rows affected (0.17 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc AddressBook;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| firstName   | varchar(50)  | NO   |     | NULL    |       |
+| lastName    | varchar(50)  | NO   |     | NULL    |       |
+| address     | varchar(100) | NO   |     | NULL    |       |
+| city        | varchar(50)  | NO   |     | NULL    |       |
+| state       | varchar(50)  | NO   |     | NULL    |       |
+| zip         | int          | NO   |     | NULL    |       |
+| phoneNumber | double       | NO   |     | NULL    |       |
+| email       | varchar(100) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.10 sec)
+
+mysql> select * from AddressBook;
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+| firstName | lastName | address    | city    | state         | zip     | phoneNumber | email                 |
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+| prajakta  | Mahajan  | cidco      | Nashik  | Maharashtra   |  220064 |  7310133663 | prajakta56@gmail.com  |
+| ruchita   | rathi    | Ramapura   | Ethawa  | Bihar         |  561210 |   999999999 | ruchita@gmail.com     |
+| komal     | shelar   | ringroad   | surat   | Gujrat        |  520102 |   888888888 | komal@gmail.com       |
+| mohini    | patil    | sirinagara | chennai | Tamilnadu     | 3021402 |   777777777 | mohini@gmail.com      |
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+4 rows in set (0.00 sec)
+
+
+-- UC4 editing the existing contact by their firstname
+
+
+mysql> update AddressBook set  lastName='Pawar' where firstname='mohini';
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update addressbook set phoneNumber=9876543210 where firstname='ruchita';
+Query OK, 0 rows affected (0.07 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select * from AddressBook;
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+| firstName | lastName | address    | city    | state         | zip     | phoneNumber | email                 |
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+| prajakta  | Mahajan  | cidco      | Nashik  | Maharashatra  |  220064 |  7310133663 | prajakta56@gmail.com  |
+| ruchita   | rathi    | Ramapura   | Ethawa  | Bihar         |  561210 |   999999999 | ruchita@gmail.com     |
+| komal     | shelar   | ringroad   | surat   | Gujrat        |  520102 |   888888888 | komal@gmail.com       |
+| mohini    | Pawar    | sirinagara | chennai | Tamilnadu     | 3021402 |   777777777 | mohini@gmail.com      |
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+4 rows in set (0.00 sec)
+
+
+-- UC5 -deleting the contact by their lastname
+
+
+mysql> delete from addressBook where lastname='rathi';
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from AddressBook;
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+| firstName | lastName | address    | city    | state         | zip     | phoneNumber | email                 |
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+| prajakta  | Mahajan  | cidco      | Nashik  | Maharashatra  |  220064 |  7310133663 | prajakta56@gmail.com  | 
+| komal     | shelar   | ringroad   | surat   | Gujrat        |  520102 |   888888888 | komal@gmail.com       |
+| mohini    | Pawar    | sirinagara | chennai | Tamilnadu     | 3021402 |   777777777 | mohini@gmail.com      |
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+3 rows in set (0.00 sec)
+
+
+-- uc6 retrieving the contact by city or state
+
+
+mysql> select * from AddressBook where city = 'Nashik' or State='Maharashtra';
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+| firstName | lastName | address    | city    | state         | zip     | phoneNumber | email                 |
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+| prajakta  | Mahajan  | cidco      | Nashik  | Maharashatra  |  220064 |  7310133663 | prajakta56@gmail.com  |
++-----------+----------+------------+---------+---------------+---------+-------------+-----------------------+
+1 rows in set (0.00 sec)
+
+
+-- UC7 size of addressbook by city and state
+
+
+mysql> select count(firstname) from AddressBook where city = 'Nashik';
++------------------+
+| count(firstname) |
++------------------+
+|                1 |
++------------------+
+1 row in set (0.07 sec)
+
+mysql> select count(firstName) from AddressBook where state = 'Bihar';
++------------------+
+| count(firstName) |
++------------------+
+|                0 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(firstname) from AddressBook where city='chennai';
++------------------+
+| count(firstname) |
++------------------+
+|                1 |
++------------------+
+1 row in set (0.00 sec)
+
+
+-- UC8 soriting the name alphbetically for given city
+
+
+mysql> insert into AddressBook(firstname,lastname,address,city,state,zip,phoneNumber,email)
+    -> values ('Advika','Mahajan','trimurti','mumbai','Maharashtra',50102,9874561023,'Advika@gmail.com');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into AddressBook(firstname,lastname,address,city,state,zip,phoneNumber,email)
+    ->  values('pooja','Mishra','Aashok Stamb','Lukhnow','Uttar Pradesh',851026,9874563201,'pooja@gmail.com');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into AddressBook(firstname,lastname,address,city,state,zip,phoneNumber,email)
+    ->  values('pranali','reddy','main road','benagaluru','karnataka',652142,8520147963,'pranali@gmail.com');
+Query OK, 1 row affected (0.13 sec)
+
+mysql>
+mysql>  select * from AddressBook;
++-----------+----------+--------------+---------------+---------------+---------+-------------+-----------------------+
+| firstName | lastName | address      | city          | state         | zip     | phoneNumber | email                 |
++-----------+----------+--------------+---------------+---------------+---------+-------------+-----------------------+
+| prajakta  | Mahajan  | cidco        | Nashik        | Maharashtra   |  220064 |  7310133663 | prajakta56@gmail.com  | 
+| komal     | shelar   | ringroad     | surat         | Gujrat        |  520102 |   888888888 | komal@gmail.com      | 
+| mohini    | Pawar    | sirinagara   | chennai       | Tamilnadu     | 3021402 |   777777777 | mohini@gmail.com       | 
+| Advika    | Mahajan  | trimurti     | mumbai        | Maharashtra   |   50102 |  9874561023 | Advika@gmail.com        |              
+| pooja     | Mishra   | Aashok stamb | Lukhnow       | Uttar Pradesh |  851026 |  9874563201 | pooja@gmail.com       | 
+| pranali   | reddy    | main road    | benagaluru    | karnataka     |  652142 |  8520147963 | pranali@gmail.com        |
++-----------+----------+--------------+---------------+---------------+---------+-------------+-----------------------+
+6 rows in set (0.04 sec)
+
+mysql> select firstname,city from AddressBook order by city;
++-----------+---------------+
+| firstname | city          |
++-----------+---------------+
+| pranali   | benagaluru    |
+| mohini    | chennai       |
+| pooja     | Luvknow       |
+| Advika    | mumbai        |
+| prajakta  | Nashik        |
+| komal     | surat         | 
++-----------+---------------+
+6 rows in set (0.07 sec)
+
+
+-- UC9- altering the table with addressbook name and contact type
+
+
+mysql> alter table addressbook add bookName varchar(25) not null, add contactType varchar(25)  not null;
+Query OK, 0 rows affected (1.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc addressBook;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| firstName   | varchar(50)  | NO   |     | NULL    |       |
+| lastName    | varchar(50)  | NO   |     | NULL    |       |
+| address     | varchar(100) | NO   |     | NULL    |       |
+| city        | varchar(50)  | NO   |     | NULL    |       |
+| state       | varchar(50)  | NO   |     | NULL    |       |
+| zip         | int          | NO   |     | NULL    |       |
+| phoneNumber | double       | NO   |     | NULL    |       |
+| email       | varchar(100) | NO   |     | NULL    |       |
+| bookName    | varchar(25)  | NO   |     | NULL    |       |
+| contactType | varchar(25)  | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+10 rows in set (0.09 sec)
+
+mysql> update AddressBook set bookname='one', contactType='Family' where lastname='Mahajan' ;
+Query OK, 2 rows affected (0.14 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update addressBook set bookname='two' ,contactType='Friends' where firstname='komal';
+Query OK, 1 row affected (0.21 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update addressbook set bookname='two',contactType='Profession' where  lastname='Pawar';
+Query OK, 2 rows affected (0.14 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql>  select * from AddressBook;
++-----------+----------+--------------+---------------+---------------+---------+-------------+-----------------------+----------+-------------+
+| firstName | lastName | address      | city          | state         | zip     | phoneNumber | email                 | bookName | contactType |
++-----------+----------+--------------+---------------+---------------+---------+-------------+-----------------------+----------+-------------+
+| prajakta  | Mahajan  | cidco        | Nashik        | Maharashtra   |  220064 |  7310133663 | prajakta56@gmail.com  | one      | Family      |
+| komal     | shelar   | ring road    | surat         | Gujrat        |  520102 |   888888888 | komal@gmail.com       | two      | Profession  |
+| mohini    | Pawar    | sirinagara   | chennai       | Tamilnadu     | 3021402 |   777777777 | mohini@gmail.com      | two      | Profession  |
+| Advika    | Mahajan  | trimurti     | mumbai        | Maharashtra   |   50102 |  9874561023 | Advika@gmail.com      | one      | Family      |
+| pooja     | Mishra   | Aashok stamb | Lucknow       | Uttar Pradesh |  851026 |  9874563201 | pooja@gmail.com       |          |             |
+| pranali   | reddy    | main road    | benagaluru    | karnataka     |  652142 |  8520147963 | pranali@gmail.com     |          |             |
++-----------+----------+--------------+---------------+---------------+---------+-------------+-----------------------+----------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from addressbook where contactType='Family';
++-----------+----------+-------------+-----------+---------------+--------+-------------+-----------------------+----------+-------------+
+| firstName | lastName | address     | city      | state         | zip    | phoneNumber | email                 | bookName | contactType |
++-----------+----------+-------------+-----------+---------------+--------+-------------+-----------------------+----------+-------------+
+| prajakta  | Mahajan  | cidco       | Nashik    | Maharashtra   | 220064 |  7310133663 | prajakta56@gmail.com  | one      | Family      |
+| Advika    | Mahajan  | trimurti    | mumbai    | Maharashtra   | 851026 |  9874563201 | Advika@gmail.com      | one      | Family      |
++-----------+----------+-------------+-----------+---------------+--------+-------------+-----------------------+----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from AddressBook where contacttype='Friends';
+Empty set (0.00 sec)
+
+
+-- UC10 ability to get count of contacts by contacttype
+
+
+mysql> select count(firstname) from AddressBook where contactType='family';
++------------------+
+| count(firstname) |
++------------------+
+|                2 |
++------------------+
+1 row in set (0.00 sec)
